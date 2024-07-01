@@ -1,10 +1,8 @@
 package org.example.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.example.context.ApplicationContextHolder;
-import org.example.util.InterfaceParametersUtils;
+import org.example.util.ParamUtils;
 import org.example.vo.Resp;
 import org.springframework.aop.TargetClassAware;
 
@@ -40,7 +38,7 @@ public class ParamServlet extends HttpServlet {
             for (Method method : clazz.getDeclaredMethods()) {
                 try {
                     if (methodName.equals(method.getName())) {
-                        result = InterfaceParametersUtils.getInterfaceInputJsonString(clazz.getName(), method.getName());
+                        result = ParamUtils.getInterfaceInputJsonString(clazz.getName(), method.getName());
                         break;
                     }
                 } catch (Exception e) {

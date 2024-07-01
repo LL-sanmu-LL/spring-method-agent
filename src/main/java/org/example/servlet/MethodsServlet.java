@@ -34,7 +34,7 @@ public class MethodsServlet extends HttpServlet {
         HashMap<String, String> hashMap = mapper.readValue(req.getInputStream(), HashMap.class);
         String beanName = hashMap.get("serviceName");
         Object bean = ApplicationContextHolder.getBean(beanName);
-        Class clazz;
+        Class<?> clazz;
         if (AopUtils.isJdkDynamicProxy(bean)) {
             InvocationHandler handler = Proxy.getInvocationHandler(bean);
             AdvisedSupport advised = (AdvisedSupport) new DirectFieldAccessor(handler)
