@@ -1,8 +1,8 @@
-package org.example.servlet;
+package org.zj.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.context.ApplicationContextHolder;
-import org.example.vo.Resp;
+import org.zj.context.ApplicationContextHolder;
+import org.zj.vo.Resp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

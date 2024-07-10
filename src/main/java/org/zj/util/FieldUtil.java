@@ -1,4 +1,4 @@
-package org.example.util;
+package org.zj.util;
 
 import java.lang.reflect.*;
 import java.math.BigDecimal;
@@ -11,7 +11,7 @@ public class FieldUtil {
         try {
             if (clz == List.class || clz == ArrayList.class) {
                 ArrayList<Object> list = new ArrayList<>();
-                if (type instanceof ParameterizedType) {//clz的泛型是否也是一个泛型
+                if (type instanceof ParameterizedType) {
                     Type typesType = ((ParameterizedType) type).getRawType();
                     list.add(generateGenericInstance((Class<?>)typesType, null));
                 }else{
@@ -51,7 +51,6 @@ public class FieldUtil {
                 }
                 obj = clz.newInstance();
 
-                //TODO 填充obj的属性
             } catch (Exception var12) {
                 var12.printStackTrace();
             }
@@ -141,19 +140,16 @@ public class FieldUtil {
         return fieldObj;
     }
 
-    /**
-     * 获取字段的第position个泛型的类型
-     */
     private static Class<?> getGenericType(Field field, int postion) throws Exception {
         Type genericType = field.getGenericType();
-        if (genericType instanceof ParameterizedType) {//判断是否是范型类
+        if (genericType instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType) genericType;
 
             try {
                 Class<?> genericClazz = (Class<?>) pt.getActualTypeArguments()[postion];
                 return Class.forName(genericClazz.getName());
             } catch (Exception e) {
-                return null;//泛型内嵌套泛型?先不考虑这么复杂
+                return null;//nested case
             }
         } else {
             return null;
@@ -170,7 +166,7 @@ public class FieldUtil {
     }
 
     /**
-     * 获取一个类的所有属性
+     * all field
      */
     private static List<Field> getClassField(Class<?> clz) {
         List<Field> fields = new ArrayList<>();
@@ -184,7 +180,7 @@ public class FieldUtil {
     }
 
     /**
-     * 获取一个类的所有方法
+     * all method
      */
     private static Map<String, Method> getClassMethod(Class<?> clz) {
         Map<String, Method> methodMap = new LinkedHashMap<>();

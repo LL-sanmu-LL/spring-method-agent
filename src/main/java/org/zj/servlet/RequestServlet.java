@@ -1,14 +1,14 @@
-package org.example.servlet;
+package org.zj.servlet;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.context.ApplicationContextHolder;
-import org.example.util.MethodUtil;
-import org.example.vo.Resp;
 import org.springframework.aop.TargetClassAware;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.DirectFieldAccessor;
+import org.zj.context.ApplicationContextHolder;
+import org.zj.util.MethodUtil;
+import org.zj.vo.Resp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,12 +38,11 @@ public class RequestServlet extends HttpServlet {
         String methodName = hashMap.get("methodName");
         String param = hashMap.get("param");
         Object bean = ApplicationContextHolder.getBean(beanName);
-        // 获取Bean的真实类，这样保证JSON.parseObject按照类型对泛型，反序列化不出问题
         Class<?> realBeanClass = AopUtils.getTargetClass(bean);
         Object result = null;
 
         try {
-            if (AopUtils.isCglibProxy(bean)) {//cglib动态代理
+            if (AopUtils.isCglibProxy(bean)) {
                 Method method = Arrays.stream(realBeanClass.getDeclaredMethods()).filter(v -> methodName.equals(v.getName())).findFirst().orElse(null);
                 try {
                     result = invokeMethod(bean, method, param);
@@ -53,7 +52,7 @@ public class RequestServlet extends HttpServlet {
                     e.printStackTrace();
 
                 }
-            } else if (AopUtils.isJdkDynamicProxy(bean)) {//jdk动态代理
+            } else if (AopUtils.isJdkDynamicProxy(bean)) {
                 Proxy proxyBean = (Proxy) bean;
                 InvocationHandler handler = (InvocationHandler) new DirectFieldAccessor(proxyBean)
                         .getPropertyValue("h");
@@ -64,8 +63,7 @@ public class RequestServlet extends HttpServlet {
                 }
                 Method method = Arrays.stream(clazz.getDeclaredMethods()).filter(v -> methodName.equals(v.getName())).findFirst().orElse(null);
                 result = invokeProxyMethod(handler, bean, method, param);
-            }else if (bean.getClass().isInterface()) {// 必须用getInterfaces，这样才能取到方法参数的泛型
-                // 获取接口或类的所有方法
+            } else if (bean.getClass().isInterface()) {
                 List<Method> methodList = MethodUtil.getMethods(realBeanClass);
 
                 Method method = methodList.stream().filter(v -> methodName.equals(v.getName())).findFirst().orElse(null);
@@ -76,7 +74,6 @@ public class RequestServlet extends HttpServlet {
                     e.printStackTrace();
                 }
             } else {
-                // 非接口实现类
                 Method method = Arrays.stream(realBeanClass.getDeclaredMethods()).filter(v -> methodName.equals(v.getName())).findFirst().orElse(null);
                 try {
                     result = invokeMethod(bean, method, param);
@@ -125,13 +122,13 @@ public class RequestServlet extends HttpServlet {
         Class<?>[] types = targetMethod.getParameterTypes();
         List<Object> params = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(inputParams);
-        if(types.length == 0){
+        if (types.length == 0) {
             return params;
         } else if (types.length == 1) {
             Object paramObject = mapper.treeToValue(jsonNode, types[0]);
             params.add(paramObject);
             return params;
-        }else {
+        } else {
             for (int i = 0; i < types.length; i++) {
                 JsonNode node = jsonNode.get(i);
                 Object paramObject = mapper.treeToValue(node, types[i]);

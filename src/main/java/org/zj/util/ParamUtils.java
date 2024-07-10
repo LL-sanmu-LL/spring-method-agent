@@ -1,4 +1,4 @@
-package org.example.util;
+package org.zj.util;
 
 
 import java.lang.reflect.Method;
@@ -10,7 +10,7 @@ import java.util.List;
 public class ParamUtils {
 
     /**
-     * 根据解决类名和方法名，获取接口参数
+     * get param
      */
     public static Object getInterfaceInputJsonString(String interfaceName, String methodName) {
         Method[] methods;
@@ -23,7 +23,7 @@ public class ParamUtils {
                 }
             }
         } catch (Exception e) {
-            System.out.println(String.format("获取%s Bean %s方法 参数列表失败！", interfaceName, methodName));
+            System.out.println(String.format("get%s Bean %s method param list failed！", interfaceName, methodName));
             e.printStackTrace();
         }
         return jsonInput;
@@ -45,9 +45,6 @@ public class ParamUtils {
         return list.size() > 1 ? list : list.get(0);
     }
 
-    /**
-     * 获取非泛型实例
-     */
     private static Object getClassInstance(Class<?> clazz) {
         try {
             return FieldUtil.generateClassInstance(clazz);
@@ -56,9 +53,6 @@ public class ParamUtils {
         }
     }
 
-    /**
-     * 获取泛型实例
-     */
     private static Object getGenericInstance(Class<?> clazz, Type type) {
         try {
             return FieldUtil.generateGenericInstance(clazz, type);

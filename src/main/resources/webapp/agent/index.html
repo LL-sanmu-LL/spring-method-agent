@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>服务接口测试工具</title>
+    <title>spring method agent</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
@@ -109,33 +109,33 @@
 </style>
 <body>
 <div class="main">
-    <h1>服务测试工具</h1>
+    <h1>spring method agent</h1>
     <div class="input-box">
-        <span class="box-title">输入参数</span>
+        <span class="box-title">input</span>
         <div class="service">
-            <input name="filter" placeholder="请输入服务过滤值"/>
+            <input name="filter" placeholder="filter bean"/>
             <select name="serviceName">
-                <option value="">---请选择服务名---</option>
+                <option value="">---bean---</option>
             </select>
             <select name="methodName">
-                <option value="">---请选择方法名---</option>
+                <option value="">---method---</option>
             </select>
-            <button name="submit">提交</button>
+            <button name="submit">submit</button>
         </div>
         <div class="input-param">
             <textarea name="param"></textarea>
             <div class="operation">
-                <button name="request-unzip">展开</button>
-                <button name="request-zip">压缩</button>
+                <button name="request-unzip">short</button>
+                <button name="request-zip">pretty</button>
             </div>
         </div>
     </div>
     <div class="output-box">
-        <span class="box-title">输出参数</span>
+        <span class="box-title">param</span>
         <div class="output">
             <div class="operation">
-                <button name="response-unzip">展开</button>
-                <button name="response-zip">压缩</button>
+                <button name="response-unzip">short</button>
+                <button name="response-zip">pretty</button>
             </div>
             <textarea name="output"></textarea>
         </div>
@@ -197,7 +197,7 @@
                 },
                 error: function (response) {
                     console.log(response);
-                    updateOutput('服务器返回为空！');
+                    updateOutput('response is empty！');
                 }
             });
         };
@@ -205,7 +205,6 @@
         var loadMethods = function () {
             let serviceName = $('select[name="serviceName"]').val();
             if(serviceName == null || serviceName === "" || serviceName=== "undefined") {
-                console.log("serviceName为空");
                 return;
             }
             $.ajax({
@@ -222,7 +221,7 @@
                 },
                 error: function (response) {
                     console.log(response);
-                    updateOutput('服务器返回为空！');
+                    updateOutput('response is empty！');
                 }
             });
         };
@@ -246,7 +245,7 @@
                 },
                 error: function (response) {
                     console.log(response);
-                    updateOutput('服务器返回为空！');
+                    updateOutput('response is empty！');
                 }
             });
         };
@@ -272,7 +271,7 @@
                 error: function (response) {
                     submitObj.removeAttr('disabled');
                     console.log(response);
-                    updateOutput(response.responseText || '服务器返回为空！');
+                    updateOutput(response.responseText || 'response is empty！');
                 }
             });
         };

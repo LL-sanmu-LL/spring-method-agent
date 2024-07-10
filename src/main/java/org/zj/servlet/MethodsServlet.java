@@ -1,12 +1,11 @@
-package org.example.servlet;
+package org.zj.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.context.ApplicationContextHolder;
-import org.example.vo.Resp;
+import org.zj.context.ApplicationContextHolder;
+import org.zj.vo.Resp;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.DirectFieldAccessor;
-import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +50,6 @@ public class MethodsServlet extends HttpServlet {
                 ms.add(method.getName());
             }
         }
-        // 父类接口方法
         Class<?> superclass = clazz.getSuperclass();
         Method[] superDeclaredMethods = null;
         if (superclass != null) {

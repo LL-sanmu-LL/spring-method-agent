@@ -1,4 +1,4 @@
-package org.example.context;
+package org.zj.context;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -11,9 +11,6 @@ public class ApplicationContextHolder {
         applicationContext = context;
     }
 
-    /**
-     * 获取所有bean
-     */
     public static String[] getBeans() {
         return applicationContext.getBeanDefinitionNames();
     }

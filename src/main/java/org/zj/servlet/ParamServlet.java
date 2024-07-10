@@ -1,11 +1,11 @@
-package org.example.servlet;
+package org.zj.servlet;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.context.ApplicationContextHolder;
-import org.example.util.ParamUtils;
-import org.example.vo.Resp;
+import org.zj.context.ApplicationContextHolder;
+import org.zj.util.ParamUtils;
+import org.zj.vo.Resp;
 import org.springframework.aop.TargetClassAware;
 
 import javax.servlet.ServletException;

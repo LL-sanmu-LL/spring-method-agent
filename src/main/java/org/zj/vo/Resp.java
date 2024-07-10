@@ -1,4 +1,4 @@
-package org.example.vo;
+package org.zj.vo;
 
 import java.io.Serializable;
 

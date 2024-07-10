@@ -1,4 +1,4 @@
-package org.example.servlet;
+package org.zj.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
