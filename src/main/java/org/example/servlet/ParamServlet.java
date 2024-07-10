@@ -1,5 +1,7 @@
 package org.example.servlet;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.context.ApplicationContextHolder;
 import org.example.util.ParamUtils;
@@ -16,6 +18,12 @@ import java.util.HashMap;
 
 public class ParamServlet extends HttpServlet {
     private static final ObjectMapper mapper = new ObjectMapper();
+    static {
+        //都设置为不可见，即不会被序列化和反序列化。
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        //类的字段是可见的，即会被序列化和反序列化。
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+    }
 
     @Override
     public void init() throws ServletException {
@@ -49,10 +57,10 @@ public class ParamServlet extends HttpServlet {
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+
         String jsonResponse = mapper.writeValueAsString(Resp.success(result));
 
         resp.getWriter().write(jsonResponse);
     }
-
 
 }

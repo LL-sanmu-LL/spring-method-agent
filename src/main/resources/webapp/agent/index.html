@@ -238,11 +238,10 @@
                 data: JSON.stringify({serviceName: serviceName, methodName: methodName}),
                 success: function (response) {
                     var data = processResult(response);
-                    if (data && data.length > 0) {
-                        if (data.length === 1) {
-                            data = data[0];
-                        }
+                    if (data) {
                         $('textarea[name="param"]').val(JSON.stringify(data, null, 2));
+                    }else{
+                        $('textarea[name="param"]').val("");
                     }
                 },
                 error: function (response) {

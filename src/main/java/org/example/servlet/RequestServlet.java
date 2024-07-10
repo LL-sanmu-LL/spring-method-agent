@@ -125,16 +125,19 @@ public class RequestServlet extends HttpServlet {
         Class<?>[] types = targetMethod.getParameterTypes();
         List<Object> params = new ArrayList<>();
         JsonNode jsonNode = mapper.readTree(inputParams);
-        // 参数数量必须相同
-        if (types.length == jsonNode.size()) {
+        if(types.length == 0){
+            return params;
+        } else if (types.length == 1) {
+            Object paramObject = mapper.treeToValue(jsonNode, types[0]);
+            params.add(paramObject);
+            return params;
+        }else {
             for (int i = 0; i < types.length; i++) {
-                JsonNode jsonNode1 = jsonNode.get(i);
-                Object paramObject = mapper.treeToValue(jsonNode1, types[i]);
+                JsonNode node = jsonNode.get(i);
+                Object paramObject = mapper.treeToValue(node, types[i]);
                 params.add(paramObject);
             }
             return params;
-        } else {
-            return null;
         }
     }
 }

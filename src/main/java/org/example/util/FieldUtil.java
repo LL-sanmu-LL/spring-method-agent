@@ -11,9 +11,9 @@ public class FieldUtil {
         try {
             if (clz == List.class || clz == ArrayList.class) {
                 ArrayList<Object> list = new ArrayList<>();
-                if (type instanceof ParameterizedType) {
-                    Type subType = ((ParameterizedType) type).getActualTypeArguments()[0];
-                    list.add(generateGenericInstance((Class<?>) type, subType));
+                if (type instanceof ParameterizedType) {//clz的泛型是否也是一个泛型
+                    Type typesType = ((ParameterizedType) type).getRawType();
+                    list.add(generateGenericInstance((Class<?>)typesType, null));
                 }else{
                     list.add(generateClassInstance((Class<?>) type));
                 }
